@@ -3,11 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DEINT_ElTiempoManu.MVVM.views.PaginaInicial"
              Title="PaginaInicial"
-             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI">
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:converters="clr-namespace:DEINT_ElTiempoManu.MVVM.Converters">
 
-    <VerticalStackLayout>
-        <Entry />
+    <ContentPage.Resources>
+        <converters:CodeToLottieConverter x:Key="lottieConverter"/>
+        <converters:CodeToWeatherConverter x:Key="weatherConverter"/>
+    </ContentPage.Resources>
 
-        <skia:SKLottieView RepeatCount="-1" Source=""/>
-    </VerticalStackLayout>
+    <Grid RowDefinitions=".1*, .7*, .2*">
+        <SearchBar x:Name="barra" Grid.Row="0" SearchCommand="{Binding comandoBusqueda}" SearchCommandParameter="{Binding Source={x:Reference barra}, Path=Text}" Style="{StaticResource Key=barraStyle}"/>
+
+        <VerticalStackLayout Grid.Row="1">
+            <Label Text="{Binding tiempo.timezone}"/>
+            <Label Text="{Binding dia, StringFormat='{0:MMMM, dd, yyyy}'}"/>
+            <skia:SKLottieView RepeatCount="-1" Source="{Binding tiempo.current_weather.weathercode, Converter={StaticResource lottieConverter}} " HeightRequest="300" WidthRequest="300"/>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="2" RowDefinitions="*, *" ColumnDefinitions="*, *, *">
+            <Label Grid.Row="0" Grid.Column="0" Text="Temp"/>
+            <Label Grid.Row="0" Grid.Column="1" Text="Wind"/>
+            <Label Grid.Row="0" Grid.Column="2" Text="Weather"/>
+
+            <Label Grid.Row="1" Grid.Column="0" Text="{Binding tiempo.current_weather.temperature}"/>
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding tiempo.current_weather.windspeed}"/>
+            <Label Grid.Row="1" Grid.Column="2" Text="{Binding tiempo.current_weather.weathercode, Converter={StaticResource weatherConverter}}"/>
+        </Grid>
+    </Grid>
 </ContentPage>

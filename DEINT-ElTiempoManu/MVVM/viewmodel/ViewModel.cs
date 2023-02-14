@@ -1,16 +1,26 @@
 ﻿using DEINT_ElTiempoManu.MVVM.models;
+using PropertyChanged;
 using System.Text.Json;
+using System.Windows.Input;
 
 namespace DEINT_ElTiempoManu.MVVM.viewmodel
 {
+    [AddINotifyPropertyChangedInterface]
+
     class ViewModel
     {
+        public ICommand comandoBusqueda { get; set; }
         HttpClient client;
-        Tiempo tiempo;
-
+        public Tiempo tiempo { get; set; }
+        public DateTime dia { get; set; }
         public ViewModel()
         {
             client = new HttpClient();
+            comandoBusqueda = new Command(async (e) =>
+            {
+                await GetWeather(await GetCoordinatesAsync(e.ToString()));
+            });
+            dia = DateTime.Now;
         }
 
         private async Task<Location> GetCoordinatesAsync(string adress)

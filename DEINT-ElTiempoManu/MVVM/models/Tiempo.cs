@@ -1,5 +1,8 @@
-﻿namespace DEINT_ElTiempoManu.MVVM.models
+﻿using PropertyChanged;
+
+namespace DEINT_ElTiempoManu.MVVM.models
 {
+    [AddINotifyPropertyChangedInterface]
     public class Tiempo
     {
         public float latitude { get; set; }
