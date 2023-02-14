@@ -53,11 +53,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="MVVM\models\" />
-	  <Folder Include="MVVM\viewmodel\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="MVVM\views\PaginaInicial.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
